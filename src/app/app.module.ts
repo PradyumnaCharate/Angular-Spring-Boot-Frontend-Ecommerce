@@ -12,6 +12,7 @@ import { ProductDetailsComponent } from './components/product-details/product-de
 //DEFINING ROUTES FOR ROUTER
 
 const routes:Routes=[
+  {path:'products/:id',component:ProductDetailsComponent},
   {path:'search/:keyword',component:ProductListComponent},
   {path:'category/:id',component:ProductListComponent},
   {path:'category',component:ProductListComponent},
