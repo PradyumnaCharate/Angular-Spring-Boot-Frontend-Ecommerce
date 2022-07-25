@@ -22,7 +22,7 @@ export class CartService {
     let existingCartItem :CartItem | undefined  =undefined;
 
     if (this.cartItems.length>0){
-      existingCartItem=this.cartItems.find((temp)=>{temp.id===theCartItem.id});
+      existingCartItem = this.cartItems.find( tempCartItem => tempCartItem.id === theCartItem.id );
       //check if we found it
       alreadyExistsInCart=(existingCartItem != undefined)
 
@@ -50,5 +50,29 @@ export class CartService {
     //.next will publish event.
     this.totalPrice.next(toalPriceValue);
     this.totalQuantity.next(totalQuantityValue);
+  }
+  decrementQuantity(theCartItem: CartItem) {
+
+    theCartItem.quantity--;
+
+    if (theCartItem.quantity === 0) {
+      this.remove(theCartItem);
+    }
+    else {
+      this.computeCartTotals();
+    }
+  }
+
+  remove(theCartItem: CartItem) {
+
+    // get index of item in the array
+    const itemIndex = this.cartItems.findIndex( tempCartItem => tempCartItem.id === theCartItem.id );
+
+    // if found, remove the item from the array at the given index
+    if (itemIndex > -1) {
+      this.cartItems.splice(itemIndex, 1);
+
+      this.computeCartTotals();
+    }
   }
 }
